@@ -20,5 +20,5 @@ if [ -e "$world" ]; then
 fi
 mkdir $world
 cd $world
-mkdir states constraints generators
+mkdir states constraints generators pending_changes meta-state
 

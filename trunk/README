@@ -3,10 +3,16 @@ Welcome to Arbiter
 To get started, try the following:
 
     bin/start
+
+    import constraint devel/examples/constraints/rock-paper-scissors
+    import generator  devel/examples/generators/rps-always-rock
+    import generator  devel/examples/generators/rps-random
+
     create rps1
     add rock-paper-scissors to rps1
-    add rps-always-rock to rps1
-    add rps-random to rps1
+    add rps-always-rock     to rps1
+    add rps-random          to rps1
+
     run rps1 --max-iter=1000
 
 Your newly generated data is in data/worlds/rps1/states
