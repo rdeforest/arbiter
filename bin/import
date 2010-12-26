@@ -1,0 +1,32 @@
+#!/bin/bash
+
+usage="USAGE: import \"type\" \"location\"
+"
+
+$ARB_LIB/create_data_dir
+
+item_type="$1"
+location="$2"
+
+if [ ! "$location" -o ! "$item_type" ]; then
+    echo $usage
+    exit
+fi
+
+item=$(basename "$location")
+
+case $item_type in
+    constraint | generator ) dir=$ARB_DATA/${item_type}s;;
+    * ) echo $usage Unknown item type "'$item_type'"; exit ;;
+esac
+
+if [ ! -d "$location" ]; then
+    echo "$location is not a directory containing a $item_type"
+fi
+
+if [ -e "$dir/$item" ]; then
+    echo "A $item_type by the name '$item' already exists."
+    exit
+fi
+
+cp -a $location $dir

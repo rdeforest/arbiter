@@ -1,0 +1,49 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+=pod
+
+Iterates a world...
+
+=cut
+
+use Getopt::Long;
+
+my $world;
+
+my $iterations            = 1;
+my $show_constraint_hooks = 1;
+my $show_generator_hooks  = 1;
+my $show_state_changes    = 1;
+
+# TODO: GetOptions(...)
+
+$world = shift;
+
+cd "$ENV{ARB_WORLDS}/$world" or
+    die "Error changing to directory for world '$world': $!";
+
+my @constraints = get_constraints();
+my @generators  = get_generators();
+    
+while ($iterations) {
+    create_next_state();
+
+    $c->new_state    for my $c (@constraints);
+    $g->query        for my $g (@generators);
+    $c->finish_state for my $c (@constraints);
+
+    finalize_state();
+
+    $iterations--;
+}
+
+use MooseX::Declare;
+
+class Constraint {
+}
+
+class Generator {
+}
