@@ -1,0 +1,24 @@
+#!/bin/bash
+
+usage="USAGE: create \"world name\"
+"
+
+$ARB_LIB/create_data_dir
+
+world="$1"
+
+if [ ! "$world" ]; then
+    echo $usage
+    exit
+fi
+
+
+cd $ARB_WORLDS
+if [ -e "$world" ]; then
+    echo "World $world already exists"
+    exit
+fi
+mkdir $world
+cd $world
+mkdir states constraints generators
+

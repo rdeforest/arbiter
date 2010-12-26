@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Start playing with Arbiter.  Invokes a shell and sets up the environment.
+
+bin_start=$( 
+    perl -MCwd -e '
+        $p = Cwd::abs_path("'$0'");
+        ($d) = ($p =~ /^([A-Z])/);
+        if ($d) {
+            $d =~ tr/A-Z/a-z/;
+            $p =~ s{^[A-Z]:}{/cygdrive/$d};
+        }
+        print $p
+    '
+)
+export ARB_HOME=$(dirname $(dirname $bin_start))
+
+export ARB_LIB=$ARB_HOME/lib
+export ARB_DATA=$ARB_HOME/data
+export ARB_WORLDS=$ARB_DATA/worlds
+
+#echo "ARB_HOME: $ARB_HOME"
+
+export PS1="arbiter> "
+export PATH="$ARB_HOME/bin:$PATH"
+
+exec /bin/bash

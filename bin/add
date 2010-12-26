@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# add "constraint or generator" [to] "world"
+
+cd $ARB_DATA
+
+item="$1"
+
+shift
+
+world="$2"
+[ "$2" ] || world="$1"
+
+if [ -e "constraints/$item" ]; then
+    item_type=constraints
+fi
+
+if [ -e "generators/$item" ]; then
+    item_type=generators
+fi
+
+if [ ! "$item_type" ]; then
+    echo "No constraint or generator found named '$item'"
+    exit
+fi
+
+if [ ! -e "worlds/$world" ]; then
+    echo "No world found named '$world'"
+    exit
+fi
+
+cd worlds/$world
+
+for c in constraints/*; do 
+    if [ -e "$c" ]; then
+        if ! $c/add-to-world $item_type $item; then
+            echo "'$c' objected to addition of $item ($item_type)"
+            exit
+        fi
+    fi
+done
+    
