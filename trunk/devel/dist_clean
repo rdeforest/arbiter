@@ -1,0 +1,4 @@
+[ "$ARB_HOME" ] || exit
+
+cd $ARB_HOME
+rm -rf data

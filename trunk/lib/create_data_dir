@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd $ARB_HOME
+
+mkdir -p data/{worlds,constraints,generators}
+
