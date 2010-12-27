@@ -40,10 +40,24 @@ while ($iterations) {
     $iterations--;
 }
 
+sub get_constraints { map { Constraint->new(dir => $_) } <constraints/*> }
+sub get_generators  { map {  Generator->new(dir => $_) } <generators/*>  }
+
 use MooseX::Declare;
 
 class Constraint {
+    has dir => (isa => 'Str', is => 'ro');
+
+    method new_state() {
+    }
+
+    method finish_state() {
+    }
 }
 
 class Generator {
+    has dir => (isa => 'Str', is => 'ro');
+
+    method query() {
+    }
 }
