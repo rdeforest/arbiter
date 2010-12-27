@@ -32,7 +32,11 @@ while ($iterations) {
     create_next_state();
 
     $c->new_state    for my $c (@constraints);
+    combine_log();
+
     $g->query        for my $g (@generators);
+    combine_log();
+
     $c->finish_state for my $c (@constraints);
 
     finalize_state();
