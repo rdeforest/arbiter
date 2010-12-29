@@ -11,57 +11,16 @@ Iterates a world...
 
 use Getopt::Long;
 
-my $world;
-
-my $iterations            = 1;
-my $show_constraint_hooks = 1;
-my $show_generator_hooks  = 1;
-my $show_state_changes    = 1;
-
 # TODO: GetOptions(...)
 
-$world = shift;
+my $world_dir = shift;
 
-cd "$ENV{ARB_WORLDS}/$world" or
-    die "Error changing to directory for world '$world': $!";
+my $world = new Iterator(dir => $world_dir);
 
-my @constraints = get_constraints();
-my @generators  = get_generators();
-    
+my $iterations = 1;
+
 while ($iterations) {
-    create_next_state();
-
-    $c->new_state    for my $c (@constraints);
-    combine_log();
-
-    $g->query        for my $g (@generators);
-    combine_log();
-
-    $c->finish_state for my $c (@constraints);
-
-    finalize_state();
-
+    $world->iterate;
     $iterations--;
 }
 
-sub get_constraints { map { Constraint->new(dir => $_) } <constraints/*> }
-sub get_generators  { map {  Generator->new(dir => $_) } <generators/*>  }
-
-use MooseX::Declare;
-
-class Constraint {
-    has dir => (isa => 'Str', is => 'ro');
-
-    method new_state() {
-    }
-
-    method finish_state() {
-    }
-}
-
-class Generator {
-    has dir => (isa => 'Str', is => 'ro');
-
-    method query() {
-    }
-}
