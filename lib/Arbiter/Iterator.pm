@@ -29,6 +29,12 @@ class Arbiter::Iterator {
             init_arg=> undef,
         );
 
+    has state_num => (
+            isa     => 'Num',
+            is      => 'rw',
+            default => 0,
+        );
+
     method _build_constraints() {
         # Pull constraints from dir/constraints
         my $d = $self->dir;
@@ -43,6 +49,19 @@ class Arbiter::Iterator {
         $self->{generators} = [
                 map { Constraint->new(dir => $_) } <$d/generators/*>
             ];
+    }
+
+    method create_next_state() {
+        my $prev = $self->state_num;
+        my $num  = $self->state_num($prev + 1);
+        my $sdir = $self->dir . "/state/";
+
+        mkdir "$sdir/$num";
+        if (-e "$sdir/current") {
+            rename "$sdir/current", "$sdir/previous";
+            symlink "../$prev", "$sdir/$num";
+        }
+        symlink $num, "$sdir/current";
     }
 
     method iterate(State $state) {

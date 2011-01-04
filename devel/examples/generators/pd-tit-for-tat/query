@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Invoked from world directory with its own name as parameter
+
+this="$1"
+opponent=$[ 1 - $this ]
+
+if [ -e state/previous ]; then
+	opponents_last_move=$(cat state/previous/$opponent/move)
+	my_move=$[ 1 - $opponents_last_move ]
+else
+	my_move=1
+fi
+
+echo -e "---\nmove: $my_move"
+
