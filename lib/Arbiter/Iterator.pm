@@ -66,14 +66,12 @@ class Arbiter::Iterator {
         symlink $num, "$sdir/current";
     }
 
-    method apply_changes(HashRef $changes) {
-        for my $source (keys %$changes) {
-            # create the directory...
-            for my $key (keys %{$changes->{$source}}) {
-                my $value = $changes->{$source}{$key};
-                # create the file...
-                ...;
-            }
+    method apply_changes(Str $source, HashRef $changes) {
+        # create the directory...
+        for my $key (keys %{$changes->{$source}}) {
+            my $value = $changes->{$source}{$key};
+            # create the file...
+            ...;
         }
     }
 
@@ -82,20 +80,17 @@ class Arbiter::Iterator {
 
         for my $c (@{$self->constraints}) {
             my $changes = $c->check_new_state($state);
-            $next->apply_changes({ pre => $changes });
+            $next->apply_changes( pre => $changes );
         }
 
-        my $changes;
         for my $g (@{$self->generators}) {
-            $changes->{$g->id} = $g->query;
+            my $changes = $g->query;
+            $next->apply_changes($g->id, $changes);
         }
-        $next->apply_changes($changes);
         
         for my $c (@{$self->constraints}) {
             my $changes = $c->finish_state($next);
-            $next->apply_changes({ post => $changes });
+            $next->apply_changes( post => $changes );
         }
-
-        $self->add_state($next);
     }
 }
