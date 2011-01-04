@@ -8,6 +8,8 @@ Generators to create a new State.
 =cut
 
 class Arbiter::Iterator {
+    use Arbiter::State;
+
     has dir => (
             isa     => 'Str',
             is      => 'ro',
@@ -64,22 +66,34 @@ class Arbiter::Iterator {
         symlink $num, "$sdir/current";
     }
 
-    method iterate(State $state) {
+    method apply_changes(HashRef $changes) {
+        for my $source (keys %$changes) {
+            # create the directory...
+            for my $key (keys %{$changes->{$source}}) {
+                my $value = $changes->{$source}{$key};
+                # create the file...
+                ...;
+            }
+        }
+    }
+
+    method iterate() {
         my $next = $self->create_next_state;
 
         for my $c (@{$self->constraints}) {
             my $changes = $c->check_new_state($state);
-            $next->apply_changes($changes);
+            $next->apply_changes({ pre => $changes });
         }
 
-        my @changes;
+        my $changes;
         for my $g (@{$self->generators}) {
-            push @changes, @{$g->query};
+            $changes->{$g->id} = $g->query;
         }
-        $next->apply_changes([@changes]);
+        $next->apply_changes($changes);
         
         for my $c (@{$self->constraints}) {
-            $c->finish_state($next);
+            my $changes = $c->finish_state($next);
+            $next->apply_changes({ post => $changes });
         }
 
         $self->add_state($next);

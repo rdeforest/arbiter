@@ -8,10 +8,12 @@ and generating output which will be combined into a new State.
 =cut
 
 class Arbiter::Generator {
+    use YAML;
+
     has dir => (isa => 'Str', is => 'ro');
 
     method query(State $state) {
-        my $changes = [];
+        my $changes = {};
 
         return $changes;
     }

@@ -4,8 +4,10 @@ project wiki.  But for now...
 
 = contents of world directory =
 
-$world/meta/state_num is a file containing the index of the last finalized state
-$world/meta/next_state_num contains the index of the state currently be worked on
+$world/state/0 is the first state
+$world/state/current is a symlink to the current state dir
+$world/state/previous is a symlink to the previous state dir
+Prior states can be deduced by subtracting one repeatedly.
 
 $world/constraints/$name is a directory containing scripts implementing that
 constraint:
