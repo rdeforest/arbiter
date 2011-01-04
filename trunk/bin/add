@@ -39,4 +39,11 @@ for c in constraints/*; do
         fi
     fi
 done
-    
+
+n=0
+
+while [ -e $item_type/$n-* ]; do
+    n=$[ $n + 1 ]
+done
+
+ln -s ../../../$item_type/$item $item_type/$n-$item

@@ -30,7 +30,7 @@ generator:
         - The other hooks don't exist for generators.  They cannot object to
           the addition of new constraints or other generators.  Enforcing
           those kinds of relationships is the job of the constraints.
-    - run
+    - query
         - iteration hook
 
 $world/states/$state_num/$keyname is a file containing a string value
@@ -40,5 +40,16 @@ $world/log/$next_state_num/$nn-$agent/$keyname is a file containing a new value
 
 As long as there are no conflicts between the changes requested by each agent,
 all of the values can be flattened into states/$state_num/$keyname.
+
+= interfaces of constraint and generator scripts =
+
+Scripts pull data from state/*.  Scripts request changes by emitting YAML
+describing those changes.  The YAML data must be a flat hash of string:string
+pairs.  $value will be written to $state/$source/$key.  For generator output,
+$source is the identifier of the generator in question.  For constraint output
+generated in state setup the source is hard-coded to "pre".  For constraint
+output at the end of state processing the source is hard-coded to "post".
+
+States are numbered in decimal starting from 0.
 
 
