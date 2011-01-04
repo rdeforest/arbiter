@@ -7,7 +7,7 @@ Generators to create a new State.
 
 =cut
 
-class Iterator {
+class Arbiter::Iterator {
     has dir => (
             isa     => 'Str',
             is      => 'ro',

@@ -7,7 +7,7 @@ and generating output which will be combined into a new State.
 
 =cut
 
-class Generator {
+class Arbiter::Generator {
     has dir => (isa => 'Str', is => 'ro');
 
     method query(State $state) {

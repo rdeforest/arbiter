@@ -3,6 +3,11 @@
 use strict;
 use warnings;
 
+use Findbin;
+use lib "$Findbin::Bin/../lib";
+
+use Arbiter::Iterator;
+
 =pod
 
 Iterates a world...
@@ -15,7 +20,7 @@ use Getopt::Long;
 
 my $world_dir = shift;
 
-my $world = new Iterator(dir => $world_dir);
+my $world = new Arbiter::Iterator(dir => $world_dir);
 
 my $iterations = 1;
 
