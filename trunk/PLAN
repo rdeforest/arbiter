@@ -1,0 +1,11 @@
+How to finish this damn thing.
+
+    - Arbiter::Iterator
+        - make it actually run
+        - make it save output to files
+    - Arbiter::Constraint
+        - wrap the five hooks
+    - Arbiter::Generator
+        - wrap the query hook
+
+    
