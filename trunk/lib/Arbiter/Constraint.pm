@@ -7,7 +7,7 @@ in a sandbox.
 
 =cut
 
-class Constraint {
+class Arbiter::Constraint {
     has dir => (isa => 'Str', is => 'ro');
 
     method add_to_world(Iterator $iterator) {
