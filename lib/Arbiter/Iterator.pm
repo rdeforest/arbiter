@@ -71,7 +71,7 @@ class Arbiter::Iterator {
         for my $key (keys %{$changes->{$source}}) {
             my $value = $changes->{$source}{$key};
             # create the file...
-            ...;
+            die "Not yet implemented.";
         }
     }
 
