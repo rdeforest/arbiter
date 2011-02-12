@@ -1,0 +1,5 @@
+#summary Interface for Generators
+
+= hook files =
+
+== add-to-world ==
