@@ -1,1 +1,17 @@
-true
+#!/bin/bash
+
+statenum=$1
+
+if [ $statenum -eq 0 ]; then
+    cat <<EOF
+---
+alice: { opponent: betty }
+betty: { opponent: alice }
+trent:
+    payouts:
+        coop-vs-coop: 3
+        coop-vs-defect: 0
+        defect-vs-coop: 5
+        defect-vs-defect: 1
+EOF
+fi
