@@ -3,14 +3,13 @@
 # Invoked from world directory with its own name as parameter
 
 this="$1"
-opponent=$[ 1 - $this ]
+opponent=$(cat state/0/$this/opponent)
 
 if [ -e state/previous ]; then
-	opponents_last_move=$(cat state/previous/$opponent/move)
-	my_move=$[ 1 - $opponents_last_move ]
+	my_play=$(cat state/previous/$opponent/play)
 else
-	my_move=1
+	my_play=cooperate
 fi
 
-echo -e "---\nmove: $my_move"
+echo -e "---\nplay: $my_play"
 

@@ -13,12 +13,13 @@ if [ ! "$world" ]; then
 fi
 
 
-cd $ARB_WORLDS
-if [ -e "$world" ]; then
-    echo "World $world already exists"
+if [ -e "$ARB_WORLDS/$world" ]; then
+    echo "World $world already exists."
+    echo "If you want to re-create it, then execute"
+    echo "    rm -rf \$ARB_WORLDS/$world";
+    echo "to destroy the old one, then run create again"
     exit
 fi
-mkdir $world
-cd $world
-mkdir states constraints generators pending_changes meta-state
+
+mkdir -p $ARB_WORLDS/$world/{states,constraints,generators,pending_changes}
 

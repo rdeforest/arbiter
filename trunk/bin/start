@@ -20,7 +20,9 @@ export ARB_LIB=$ARB_HOME/lib
 export ARB_DATA=$ARB_HOME/data
 export ARB_WORLDS=$ARB_DATA/worlds
 
-export PS1="arbiter> "
+export PS1="\narbiter> "
 export PATH="$ARB_HOME/bin:$PATH"
+
+cat README
 
 exec /bin/bash --norc
