@@ -20,8 +20,3 @@ It should not take more than a few minutes to create a simple Constraint or Gene
     * play defect
     * exit
   * play cooperate
-
-# Add your content here.  Format your content with:
-#   * Text in *bold* or _italic_
-#   * Headings, paragraphs, and lists
-#   * Automatic links to other wiki pages
