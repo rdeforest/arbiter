@@ -1,0 +1,24 @@
+#!/bin/bash
+
+statenum=$1
+statedir=$2
+
+alice=$statedir/alice; alice_played=$(cat $alice/play); alice_score=$(cat $statedir/previous/alice/score)
+betty=$statedir/betty; betty_played=$(cat $betty/play); betty_score=$(cat $statedir/previous/betty/score)
+
+  if [ $alice_played -eq cooperate -a $betty_played -eq cooperate ]; then
+    echo "alice: { score: $[ $alice_score + $($statedir/../0/trent/payouts/coop-vs-coop) ] }"
+    echo "betty: { score: $[ $betty_score + $($statedir/../0/trent/payouts/coop-vs-coop) ] }"
+elif [ $alice_played -eq cooperate -a $betty_played -eq defect    ]; then
+    echo "alice: { score: $[ $alice_score + $($statedir/../0/trent/payouts/coop-vs-defect) ] }"
+    echo "betty: { score: $[ $betty_score + $($statedir/../0/trent/payouts/defect-vs-coop) ] }"
+elif [ $alice_played -eq defect    -a $betty_played -eq cooperate ]; then
+    echo "alice: { score: $[ $alice_score + $($statedir/../0/trent/payouts/defect-vs-coop) ] }"
+    echo "betty: { score: $[ $betty_score + $($statedir/../0/trent/payouts/coop-vs-defect) ] }"
+elif [ $alice_played -eq defect    -a $betty_played -eq defect    ]; then
+    echo "alice: { score: $[ $alice_score + $($statedir/../0/trent/payouts/defect-vs-defect) ] }"
+    echo "betty: { score: $[ $betty_score + $($statedir/../0/trent/payouts/defect-vs-defect) ] }"
+else
+    echo "Error: \"Either alice's play ($alice_played) or betty's play ($betty_played) is unrecognized\""
+    exit 1
+fi

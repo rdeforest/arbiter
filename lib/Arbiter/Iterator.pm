@@ -41,7 +41,7 @@ class Arbiter::Iterator {
         # Pull constraints from dir/constraints
         my $d = $self->dir;
         $self->{constraints} = [
-                map { Constraint->new(dir => $_) } <$d/constraints/*>
+                map { Arbiter::Constraint->new(dir => $_) } <$d/constraints/*>
             ];
     }
 
@@ -49,7 +49,7 @@ class Arbiter::Iterator {
         # Pull generators from dir/generators
         my $d = $self->dir;
         $self->{generators} = [
-                map { Constraint->new(dir => $_) } <$d/generators/*>
+                map { Arbiter::Generator->new(dir => $_) } <$d/generators/*>
             ];
     }
 

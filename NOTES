@@ -4,10 +4,13 @@ project wiki.  But for now...
 
 = contents of world directory =
 
-$world/state/0 is the first state
+$world/state/0 is global/constant state
+$world/state/1 is the first state
 $world/state/current is a symlink to the current state dir
-$world/state/previous is a symlink to the previous state dir
-Prior states can be deduced by subtracting one repeatedly.
+to simplify scripts, the following links also exist:
+    $world/state/start -> 1 
+    $world/state/$n/previous -> ../$[$n - 1] is a symlink to the predecessor to state $n
+    $world/state/$n/next     -> ../$[$n + 1] is a symlink to the predecessor to state $n
 
 $world/constraints/$name is a directory containing scripts implementing that
 constraint:
@@ -52,4 +55,7 @@ output at the end of state processing the source is hard-coded to "post".
 
 States are numbered in decimal starting from 0.
 
+$constraint/add-* take a parameter naming the entity to be added.  Their
+output, if any, is state information.
 
+State 0 is a special case.
