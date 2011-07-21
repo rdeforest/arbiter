@@ -6,19 +6,15 @@ statedir=$2
 alice=$statedir/alice; alice_played=$(cat $alice/play); alice_score=$(cat $statedir/previous/alice/score)
 betty=$statedir/betty; betty_played=$(cat $betty/play); betty_score=$(cat $statedir/previous/betty/score)
 
-if   [ $alice_played -eq cooperate ]; then
-    a=coop
-elif [ $alice_played -eq defect    ]; then
-    a=defect
+if   [ $alice_played -eq cooperate ]; then a=coop
+elif [ $alice_played -eq defect    ]; then a=defect
 else
     echo "Error: \"alice's play ($alice_played) is unrecognized\""
     exit 1
 fi
 
-if   [ $betty_played -eq cooperate ]; then
-    b=coop
-elif [ $betty_played -eq defect    ]; then
-    b=defect
+if   [ $betty_played -eq cooperate ]; then b=coop
+elif [ $betty_played -eq defect    ]; then b=defect
 else
     echo "Error: \"betty's play ($betty_played) is unrecognized\""
     exit 1
