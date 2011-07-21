@@ -1,10 +1,10 @@
 Prisoner's Dilemma - http://en.wikipedia.org/wiki/Prisoner's_dilemma
 
-Generators are strategies.  Only two strategies are run at a time in this
-version.  Strategies are named 'alice' and 'betty'.  The constraint refers to
+Dynamics are strategies.  Only two strategies are run at a time in this
+version.  Strategies are named 'alice' and 'betty'.  The definition refers to
 itself as 'trent'.
 
-The only output of generators should be "play: cooperate" or "play: defect".
+The only output of dynamics should be "play: cooperate" or "play: defect".
 
 
 
