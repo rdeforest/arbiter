@@ -2,7 +2,7 @@ use MooseX::Declare;
 
 =pod
 
-A dynamic operates under the rule of Constraints, taking input from a State
+A dynamic operates under the rule of Definitions, taking input from a State
 and generating output which will be combined into a new State.
 
 =cut
