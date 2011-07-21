@@ -21,5 +21,5 @@ if [ -e "$ARB_WORLDS/$world" ]; then
     exit
 fi
 
-mkdir -p $ARB_WORLDS/$world/{states,constraints,generators,pending_changes}
+mkdir -p $ARB_WORLDS/$world/{states,definitions,dynamics,pending_changes}
 

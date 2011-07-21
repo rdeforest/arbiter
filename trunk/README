@@ -7,9 +7,9 @@
 
         bin/start
 
-        import constraint devel/examples/constraints/rock-paper-scissors
-        import generator  devel/examples/generators/rps-always-rock
-        import generator  devel/examples/generators/rps-random
+        import definition devel/examples/definitions/rock-paper-scissors
+        import dynamic    devel/examples/dynamics/rps-always-rock
+        import dynamic    devel/examples/dynamics/rps-random
 
         create rps1
         add rock-paper-scissors to rps1

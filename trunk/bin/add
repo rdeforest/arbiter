@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# add "constraint or generator" [to] "world"
+# add "definition or dynamic" [to] "world"
 
 cd $ARB_DATA
 
@@ -11,16 +11,16 @@ shift
 world="$2"
 [ "$2" ] || world="$1"
 
-if [ -e "constraints/$item" ]; then
-    item_type=constraints
+if [ -e "definitions/$item" ]; then
+    item_type=definitions
 fi
 
-if [ -e "generators/$item" ]; then
-    item_type=generators
+if [ -e "dynamics/$item" ]; then
+    item_type=dynamics
 fi
 
 if [ ! "$item_type" ]; then
-    echo "No constraint or generator found named '$item'"
+    echo "No definition or dynamic found named '$item'"
     exit
 fi
 
@@ -31,10 +31,10 @@ fi
 
 cd worlds/$world
 
-for c in constraints/*; do 
-    if [ -e "$c" ]; then
-        if ! $c/add-to-world $item_type $item; then
-            echo "'$c' objected to addition of $item ($item_type)"
+for def in definitions/*; do 
+    if [ -e "$def" ]; then
+        if ! $def/add-to-world $item_type $item; then
+            echo "'$def' objected to addition of $item ($item_type)"
             exit
         fi
     fi

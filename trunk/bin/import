@@ -16,7 +16,7 @@ fi
 item=$(basename "$location")
 
 case $item_type in
-    constraint | generator ) dir=$ARB_DATA/${item_type}s;;
+    definition | dynamic ) dir=$ARB_DATA/${item_type}s;;
     * ) echo $usage Unknown item type "'$item_type'"; exit ;;
 esac
 
