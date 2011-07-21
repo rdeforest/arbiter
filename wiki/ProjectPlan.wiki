@@ -4,14 +4,14 @@
 
 == Requirements ==
 
-* Two example experiments
-** rock-paper-scissors
-** classic iterated prisoner's dilemma
-* Docs
-** Instructions for running examples
-** Instructions for creating experiments
-* Installation help
-** script for finding dependency problems and recommending solutions
+  * Two example experiments
+    * rock-paper-scissors
+    * classic iterated prisoner's dilemma
+  * Docs
+    * Instructions for running examples
+    * Instructions for creating experiments
+  * Installation help
+    * script for finding dependency problems and recommending solutions
 
 == Steps remaining ==
 
@@ -23,4 +23,3 @@
 
 == Plan for today (2011-07-20) ==
 
-* 
