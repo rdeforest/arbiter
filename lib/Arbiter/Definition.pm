@@ -2,12 +2,12 @@ use MooseX::Declare;
 
 =pod
 
-A Constraint defines or refines the terms of a 'game' which will be iterated
+A Definition defines or refines the terms of a 'game' which will be iterated
 in a sandbox.
 
 =cut
 
-class Arbiter::Constraint {
+class Arbiter::Definition {
     has dir => (isa => 'Str', is => 'ro');
 
     method add_to_world(Arbiter::Iterator $iterator) {

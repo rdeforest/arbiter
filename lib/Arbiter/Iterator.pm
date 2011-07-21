@@ -2,8 +2,8 @@ use MooseX::Declare;
 
 =pod
 
-This object is responsible for combining a State, some Constraints and some
-Generators to create a new State.
+This object is responsible for combining a State, some Definitions and some
+Dynamics to create a new State.
 
 =cut
 
@@ -15,19 +15,19 @@ class Arbiter::Iterator {
             is      => 'ro',
         );
 
-    has constraints => (
+    has definitions => (
             isa     => 'ArrayRef', 
             is      => 'rw', 
             lazy    => 1,
-            builder => '_build_constraints',
+            builder => '_build_definitions',
             init_arg=> undef,
         );
 
-    has generators => (
+    has dynamics => (
             isa     => 'ArrayRef', 
             is      => 'rw', 
             lazy    => 1,
-            builder => '_build_generators',
+            builder => '_build_dynamics',
             init_arg=> undef,
         );
 
@@ -37,19 +37,19 @@ class Arbiter::Iterator {
             default => 0,
         );
 
-    method _build_constraints() {
-        # Pull constraints from dir/constraints
+    method _build_definitions() {
+        # Pull definitions from dir/definitions
         my $d = $self->dir;
-        $self->{constraints} = [
-                map { Arbiter::Constraint->new(dir => $_) } <$d/constraints/*>
+        $self->{definitions} = [
+                map { Arbiter::Definition->new(dir => $_) } <$d/definitions/*>
             ];
     }
 
-    method _build_generators() {
-        # Pull generators from dir/generators
+    method _build_dynamics() {
+        # Pull dynamics from dir/dynamics
         my $d = $self->dir;
-        $self->{generators} = [
-                map { Arbiter::Generator->new(dir => $_) } <$d/generators/*>
+        $self->{dynamics} = [
+                map { Arbiter::Dynamic->new(dir => $_) } <$d/dynamics/*>
             ];
     }
 
@@ -78,17 +78,17 @@ class Arbiter::Iterator {
     method iterate() {
         my $next = $self->create_next_state;
 
-        for my $c (@{$self->constraints}) {
+        for my $c (@{$self->definitions}) {
             my $changes = $c->check_new_state($state);
             $next->apply_changes( pre => $changes );
         }
 
-        for my $g (@{$self->generators}) {
+        for my $g (@{$self->dynamics}) {
             my $changes = $g->query;
             $next->apply_changes($g->id, $changes);
         }
         
-        for my $c (@{$self->constraints}) {
+        for my $c (@{$self->definitions}) {
             my $changes = $c->finish_state($next);
             $next->apply_changes( post => $changes );
         }

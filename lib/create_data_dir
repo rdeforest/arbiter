@@ -2,5 +2,5 @@
 
 cd $ARB_HOME
 
-mkdir -p data/{worlds,constraints,generators}
+mkdir -p data/{worlds,definitions,dynamics}
 

@@ -12,50 +12,50 @@ to simplify scripts, the following links also exist:
     $world/state/$n/previous -> ../$[$n - 1] is a symlink to the predecessor to state $n
     $world/state/$n/next     -> ../$[$n + 1] is a symlink to the predecessor to state $n
 
-$world/constraints/$name is a directory containing scripts implementing that
-constraint:
+$world/definitions/$name is a directory containing scripts implementing that
+definition:
     - add-to-world    - exit 0 if this contraint is happy joining a world
-    - add-constraint  - exit 0 if this contraint approves another addition
-    - add-generator   - same, but for generators
+    - add-definition  - exit 0 if this contraint approves another addition
+    - add-dynamic   - same, but for dynamics
     - start-iteration - optionally perform world prep, validation, etc
         - An example usage would be implementation of a rule which says
-          "assign pairs of players...".  This constraint would add variables
+          "assign pairs of players...".  This definition would add variables
           to the new state representing these pairings.  The agents would
           "know" to look for their opponents by agreement with the rules they
           are playing under.
     - end-iteration   - validate a new state for finalization
-        - A chance for a constraint to detect and note rules violations at the
+        - A chance for a definition to detect and note rules violations at the
           state level.
 
-$world/generators/$name is a directory containing scripts implementating that
-generator:
+$world/dynamics/$name is a directory containing scripts implementating that
+dynamic:
     - add-to-world    - same function as contraint version
-        - The other hooks don't exist for generators.  They cannot object to
-          the addition of new constraints or other generators.  Enforcing
-          those kinds of relationships is the job of the constraints.
+        - The other hooks don't exist for dynamics.  They cannot object to
+          the addition of new definitions or other dynamics.  Enforcing
+          those kinds of relationships is the job of the definitions.
     - query
         - iteration hook
 
 $world/states/$state_num/$keyname is a file containing a string value
 $world/log/$next_state_num/$nn-$agent/$keyname is a file containing a new value
     $nn is assigned by the runner script and passed to the agent
-    $agent the generator responsible for these changes
+    $agent the dynamic responsible for these changes
 
 As long as there are no conflicts between the changes requested by each agent,
 all of the values can be flattened into states/$state_num/$keyname.
 
-= interfaces of constraint and generator scripts =
+= interfaces of definition and dynamic scripts =
 
 Scripts pull data from state/*.  Scripts request changes by emitting YAML
 describing those changes.  The YAML data must be a flat hash of string:string
-pairs.  $value will be written to $state/$source/$key.  For generator output,
-$source is the identifier of the generator in question.  For constraint output
-generated in state setup the source is hard-coded to "pre".  For constraint
+pairs.  $value will be written to $state/$source/$key.  For dynamic output,
+$source is the identifier of the dynamic in question.  For definition output
+generated in state setup the source is hard-coded to "pre".  For definition
 output at the end of state processing the source is hard-coded to "post".
 
 States are numbered in decimal starting from 0.
 
-$constraint/add-* take a parameter naming the entity to be added.  Their
+$definition/add-* take a parameter naming the entity to be added.  Their
 output, if any, is state information.
 
 State 0 is a special case.
