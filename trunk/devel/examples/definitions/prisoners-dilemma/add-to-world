@@ -3,7 +3,7 @@
 num="$1"
 
 if [ "$num" != "0" ]; then
-    echo "This constraint must be primary."
+    echo "This definition must be primary."
     exit 1
 fi
 
