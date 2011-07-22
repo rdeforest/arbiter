@@ -1,42 +1,41 @@
+
 These notes will not stay here forever.  Someone should migrate them to the
 project wiki.  But for now...
 
+= contents of world directories =
 
-= contents of world directory =
+  * definitions
+    * $id-$name -> ../definitions/$def 
+      * add-to-world    - exit 0 if this definition is happy joining a world
+      * add-definition  - exit 0 if this definition approves a later addition
+      * add-dynamic     - same, but for dynamics
+      * start-iteration - optionally perform world prep, validation, etc
+        * An example usage would be implementation of a rule which
+          says "assign pairs of players...".  This definition would
+          add variables to the new state representing these pairings.
+          The agents would "know" to look for their opponents by
+          agreement with the rules they are playing under.
+      * end-iteration   - validate a new state for finalization
+        * A chance for a definition to detect and note rules
+          violations at the state level.
+  * dynamics
+    * $id-$name -> ../dynamics/$dyn 
+      * add-to-world    - same function as definition version
+        * The other hooks don't exist for dynamics.  They cannot object to
+          the addition of new dynamics and definitions cannot be added after
+          dynamics.  Enforcing dependencies is the job of the definitions.
+      * query
+        * iteration hook
+  * state/
+    * 0/ is global/constant state - set by definitions when ... ?
+    * 1/ is the first dynamic state
+    * current -> latest state dir
+    * start -> 1 
+    * $n/previous -> ../$[$n - 1] is a symlink to the predecessor to state $n
+    * $n/next     -> ../$[$n + 1] is a symlink to the successor   to state $n
+      * only exists once $n + 1 has started the setup phase
+    * $n/$keyname is a file containing a string value
 
-$world/state/0 is global/constant state
-$world/state/1 is the first state
-$world/state/current is a symlink to the current state dir
-to simplify scripts, the following links also exist:
-    $world/state/start -> 1 
-    $world/state/$n/previous -> ../$[$n - 1] is a symlink to the predecessor to state $n
-    $world/state/$n/next     -> ../$[$n + 1] is a symlink to the predecessor to state $n
-
-$world/definitions/$name is a directory containing scripts implementing that
-definition:
-    - add-to-world    - exit 0 if this contraint is happy joining a world
-    - add-definition  - exit 0 if this contraint approves another addition
-    - add-dynamic   - same, but for dynamics
-    - start-iteration - optionally perform world prep, validation, etc
-        - An example usage would be implementation of a rule which says
-          "assign pairs of players...".  This definition would add variables
-          to the new state representing these pairings.  The agents would
-          "know" to look for their opponents by agreement with the rules they
-          are playing under.
-    - end-iteration   - validate a new state for finalization
-        - A chance for a definition to detect and note rules violations at the
-          state level.
-
-$world/dynamics/$name is a directory containing scripts implementating that
-dynamic:
-    - add-to-world    - same function as contraint version
-        - The other hooks don't exist for dynamics.  They cannot object to
-          the addition of new definitions or other dynamics.  Enforcing
-          those kinds of relationships is the job of the definitions.
-    - query
-        - iteration hook
-
-$world/states/$state_num/$keyname is a file containing a string value
 $world/log/$next_state_num/$nn-$agent/$keyname is a file containing a new value
     $nn is assigned by the runner script and passed to the agent
     $agent the dynamic responsible for these changes
