@@ -1,32 +1,35 @@
 #!/bin/bash
 
-usage="USAGE: import \"type\" \"location\"
+usage="USAGE: import \"type\" \"location\" [ \"location\" ... ]
 "
 
 $ARB_LIB/create_data_dir
 
-item_type="$1"
-location="$2"
+item_type="$1"; shift
 
-if [ ! "$location" -o ! "$item_type" ]; then
+if [ ! "$1" -o ! "$item_type" ]; then
     echo $usage
     exit
 fi
-
-item=$(basename "$location")
 
 case $item_type in
     definition | dynamic ) dir=$ARB_DATA/${item_type}s;;
     * ) echo $usage Unknown item type "'$item_type'"; exit ;;
 esac
 
-if [ ! -d "$location" ]; then
-    echo "$location is not a directory containing a $item_type"
-fi
+while [ "$1" ]; do 
+    item=$(basename "$1")
 
-if [ -e "$dir/$item" ]; then
-    echo "A $item_type by the name '$item' already exists."
-    exit
-fi
+    if [ ! -d "$1" ]; then
+        echo "$1 is not a directory containing a $item_type"
+        exit 1
+    fi
 
-cp -a $location $dir
+    if [ -e "$dir/$item" ]; then
+        echo "A $item_type by the name '$item' already exists."
+        exit 1
+    fi
+
+    cp -a $1 $dir
+    shift
+done

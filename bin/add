@@ -1,49 +1,89 @@
-#!/bin/bash
+#!/usr/bin/perl
 
-# add "definition or dynamic" [to] "world"
+use strict;
+use warnings;
 
-cd $ARB_DATA
+use Cwd;
 
-item="$1"
+=pod
 
-shift
+add "definition or dynamic" [to] "world"
 
-world="$2"
-[ "$2" ] || world="$1"
+Item is the name of a module.  Once added it is symlinked from a
+unique name under 
 
-if [ -e "definitions/$item" ]; then
-    item_type=definitions
-fi
+=cut
 
-if [ -e "dynamics/$item" ]; then
-    item_type=dynamics
-fi
+my ($item, $to, $world) = @ARGV;
 
-if [ ! "$item_type" ]; then
-    echo "No definition or dynamic found named '$item'"
-    exit
-fi
+$world ||= $to;
 
-if [ ! -e "worlds/$world" ]; then
-    echo "No world found named '$world'"
-    exit
-fi
+if (!$item || !$world) {
+    die "Usage; $0 item [to] world\n";
+}
 
-cd worlds/$world
+die "ARB_DATA not set\n"                unless      $ENV{ARB_DATA};
+die "$ENV{ARB_DATA} does not exist\n"   unless -e   $ENV{ARB_DATA};
 
-for def in definitions/*; do 
-    if [ -e "$def" ]; then
-        if ! $def/add-to-world $item_type $item; then
-            echo "'$def' objected to addition of $item ($item_type)"
-            exit
-        fi
-    fi
-done
+my $data      = Cwd::abs_path($ENV{ARB_DATA});
 
-n=0
+my $world_dir = "$data/worlds/$world";
+my $def_dir   = "$data/definitions";
+my $dyn_dir   = "$data/dynamics";
 
-while [ -e $item_type/$n-* ]; do
-    n=$[ $n + 1 ]
-done
+die "No world found named '$world'\n" unless -d $world_dir;
 
-ln -s ../../../$item_type/$item $item_type/$n-$item
+my $item_type = deduce_item_type($item);
+my $type_dir  = "$world_dir/${item_type}s";
+my $real_item = "$data/${item_type}s/$item";
+
+if (<$type_dir/*-$item>) {
+    die "There is already a $item_type named '$item' in '$world'\n";
+}
+
+if ($item_type eq 'definition' && next_item('dynamic') > 0) {
+    die "Cannot add definitions after dynamics\n";
+}
+
+get_approval($item_type, $item);
+
+my $n = next_item($item_type);
+symlink $real_item, "$world_dir/${item_type}s/$n-$item";
+
+sub get_approval {
+    my ($item_type, $item) = @_;
+
+    chdir $world_dir;
+
+    for my $previous_definition (<$def_dir/*>) {
+        my $add_hook = "$previous_definition/add-$item_type";
+        system($add_hook, $item);
+        if ($? >> 8) {
+            die "$previous_definition objected to addition of $item_type $item\n";
+        } elsif ($? == -1) {
+            die "Error calling $add_hook: $!\n";
+        } elsif ($?) {
+            die "$add_hook caught a fatal signal\n";
+        }
+    }
+}
+
+sub next_item {
+    my $type = shift;
+    my $n = 0;
+    my $type_dir = "$world_dir/$type";
+
+    $n++ while <$type_dir/$n-*>;
+
+    return $n;
+}
+
+sub deduce_item_type {
+    my $item = shift;
+
+    return 'definition' if -e "$def_dir/$item";
+    return 'dynamic'    if -e "$dyn_dir/$item";
+    die "No definition or dynamic found named '$item'.\n";
+}
+
+
