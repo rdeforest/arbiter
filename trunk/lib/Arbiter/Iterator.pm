@@ -41,7 +41,7 @@ class Arbiter::Iterator {
         # Pull definitions from dir/definitions
         my $d = $self->dir;
         $self->{definitions} = [
-                map { Arbiter::Definition->new(dir => $_) } <$d/definitions/*>
+                map { Arbiter::Definition->new(dir => $_) } sort <$d/definitions/*>
             ];
     }
 
@@ -59,10 +59,12 @@ class Arbiter::Iterator {
         my $sdir = $self->dir . "/state/";
 
         mkdir "$sdir/$num";
+
         if (-e "$sdir/current") {
             rename "$sdir/current", "$sdir/previous";
             symlink "../$prev", "$sdir/$num";
         }
+
         symlink $num, "$sdir/current";
     }
 
