@@ -37,17 +37,20 @@ my $item_type = deduce_item_type($item);
 my $type_dir  = "$world_dir/${item_type}s";
 my $real_item = "$data/${item_type}s/$item";
 
-if (<$type_dir/*-$item>) {
-    die "There is already a $item_type named '$item' in '$world'\n";
-}
+if ($item_type eq 'definition') {
+    if (next_item('dynamic') > 0) {
+        die "Cannot add definitions after dynamics\n";
+    }
 
-if ($item_type eq 'definition' && next_item('dynamic') > 0) {
-    die "Cannot add definitions after dynamics\n";
+    if (<$type_dir/*-$item>) {
+        die "There is already a $item_type named '$item' in '$world'\n";
+    }
 }
-
-get_approval($item_type, $item);
 
 my $n = next_item($item_type);
+
+get_approval($item_type, $item, $n);
+
 symlink $real_item, "$world_dir/${item_type}s/$n-$item";
 
 sub get_approval {
@@ -57,7 +60,7 @@ sub get_approval {
 
     for my $previous_definition (<$def_dir/*>) {
         my $add_hook = "$previous_definition/add-$item_type";
-        system($add_hook, $item);
+        system($add_hook, $item, $n);
         if ($? >> 8) {
             die "$previous_definition objected to addition of $item_type $item\n";
         } elsif ($? == -1) {
