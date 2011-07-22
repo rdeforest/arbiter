@@ -16,13 +16,13 @@ Iterates a world...
 
 use Getopt::Long;
 
+my $iterations = 1;
+
 # TODO: GetOptions(...)
 
 my $world_dir = shift;
 
 my $world = new Arbiter::Iterator(dir => $world_dir);
-
-my $iterations = 1;
 
 while ($iterations) {
     $world->iterate;
