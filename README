@@ -7,16 +7,15 @@
 
         bin/start
 
-        import definition devel/examples/definitions/rock-paper-scissors
-        import dynamic    devel/examples/dynamics/rps-always-rock
-        import dynamic    devel/examples/dynamics/rps-random
+        import definition devel/examples/definitions/prisoners-dilemma
+        import dynamic    devel/examples/dynamics/pd-*
 
-        create rps1
-        add rock-paper-scissors to rps1
-        add rps-always-rock     to rps1
-        add rps-random          to rps1
+        create pd1
+        add prisoners-dilemma to pd1
+        add pd-always-defect  to pd1
+        add pd-tit-for-tat    to pd1
 
-        run rps1 --max-iter=1000
+        run pd1 --iter=100
 
-    Your newly generated data is in data/worlds/rps1/states
+    Your newly generated data is in data/worlds/pd1/states
 
