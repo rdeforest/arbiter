@@ -1,3 +1,4 @@
+#summary These docs should be organized into other pages
 
 These notes will not stay here forever.  Someone should migrate them to the
 project wiki.  But for now...

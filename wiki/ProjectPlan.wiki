@@ -17,14 +17,12 @@
 
 === Formalize protocols ===
 
+  * OnDiskProtocol
+  * ModuleProtocol
+
 === Finish bin/run ===
 
+=== Finish bin/add ===
+
 === Finish examples ===
-
-== Plan for today (2011-07-20) ==
-
-  * Renaming
-    * Rename Generator to Definition
-    * Rename Strategy to Dynamic
-  * Start work on implementing generic game theory Definitions
 

@@ -9,14 +9,16 @@ This page is intended to be the beginnings of an actual specification.
 
 == Simplicity ==
 
-It should not take more than a few minutes to create a simple Constraint or Generator.  For example, to create a "Cooperate until my opponent defects, then always defect", the query script should just be a few lines:
+It should not take more than a few minutes to create a simple
+Definition or Dynamic.  For example, to create a "Cooperate until my
+opponent defects, then always defect", the query script should just be
+a few lines:
 
-  * is opponent's previous move defect?
-    * set strategy to defect (echo "strategy: defect")
-    * set play to defect (echo "play: defect")
-    * exit
   * is current strategy is defect?
-    * set strategy to defect
-    * play defect
+    * defect
     * exit
-  * play cooperate
+  * is opponent's previous move defect?
+    * set strategy to defect
+    * defect
+    * exit
+  * cooperate
