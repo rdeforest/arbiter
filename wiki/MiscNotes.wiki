@@ -23,7 +23,7 @@ project wiki.  But for now...
     * {{{$id-$name -> ../dynamics/$dyn}}}
       * {{{add-to-world    - }}} same function as definition version
         * The other hooks don't exist for dynamics.  They cannot object to the addition of new dynamics and definitions cannot be added after dynamics.  Enforcing dependencies is the job of the definitions.
-      * query
+      * {{{query}}}
         * iteration hook
   * state/
     * {{{0/}}} is global/constant state - set by definitions when ... ?
@@ -35,26 +35,18 @@ project wiki.  But for now...
       * only exists once $n + 1 has started the setup phase
     * {{{$n/$keyname}}} is a file containing a string value
 
-$world/log/$next_state_num/$nn-$agent/$keyname is a file containing a new value
+  * {{{log/$next_state_num/$nn-$agent/$keyname}}} is a file containing a new value
     $nn is assigned by the runner script and passed to the agent
     $agent the dynamic responsible for these changes
 
-As long as there are no conflicts between the changes requested by each agent,
-all of the values can be flattened into states/$state_num/$keyname.
+As long as no definitions identify conflicts between the changes requested by the agents, the runner script will flattened the data into {{{states/$state_num/}}}.
 
 = interfaces of definition and dynamic scripts =
 
-Scripts pull data from the state directory.  Scripts request changes
-by emitting YAML describing those changes.  The YAML data must be a
-flat hash of string:string pairs.  $value will be written to
-$state/$source/$key.  For dynamic output, $source is the identifier of
-the dynamic in question.  For definition output generated in state
-setup the source is hard-coded to "pre".  For definition output at the
-end of state processing the source is hard-coded to "post".
+Scripts pull data from the state directory.  Scripts request changes by emitting YAML describing those changes.  The YAML data must be a flat hash of string:string pairs.  {{{$value}}} will be written to {{{$state/$source/$key}}}.  For dynamic output, $source is the identifier of the dynamic in question.  For definition output generated in state setup the source is hard-coded to "pre".  For definition output at the end of state processing the source is hard-coded to "post".
 
 States are numbered in decimal starting from 0.
 
-{{{$definition/add-*}}} are scripts which take a parameter naming the
-entity to be added.  Their output, if any, is state information.
+{{{$definition/add-*}}} are scripts which take a parameter naming the entity to be added.  Their output, if any, is state information.
 
 State 0 is a special case.
