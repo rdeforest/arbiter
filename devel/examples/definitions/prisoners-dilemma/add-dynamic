@@ -1,17 +1,12 @@
 #!/bin/bash
 
-dyn=$1
-num=$2
+dyn=$1 # name of directory under $world/dynamics
+num=$2 # instance number
 
-if [ $num -eq 1 ]; then
-    who=alice
-elif [ $num -eq 2 ]; then
-    who=betty
-else
-    echo "Error: \"only two players are supported currently\""
+  if [ $num == 0 ]; then who=alice
+elif [ $num == 1 ]; then who=betty
+else echo "Error: \"only two players are supported\""
 fi
-
-$dyn $who
 
 cat <<EOF
 ---

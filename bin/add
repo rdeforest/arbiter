@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Cwd;
+use IPC::Run3;
 
 =pod
 
@@ -61,13 +62,10 @@ sub get_approval {
     for my $previous_definition (<$def_dir/*>) {
         my $add_hook = "$previous_definition/add-$item_type";
         system($add_hook, $item, $n);
-        if ($? >> 8) {
-            die "$previous_definition objected to addition of $item_type $item\n";
-        } elsif ($? == -1) {
-            die "Error calling $add_hook: $!\n";
-        } elsif ($?) {
-            die "$add_hook caught a fatal signal\n";
-        }
+
+        if ($? >> 8)  { die "$previous_definition objected to addition of $item_type $item\n"; }
+        if ($? == -1) { die "Error calling $add_hook: $!\n"; }
+        if ($?)       { die "$add_hook caught a fatal signal\n"; }
     }
 }
 
