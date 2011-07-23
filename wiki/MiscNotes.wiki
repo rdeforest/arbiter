@@ -2,10 +2,16 @@
 These notes will not stay here forever.  Someone should migrate them to the
 project wiki.  But for now...
 
+= contents of data directory =
+
+  * defintions - library of definitions used in various worlds
+  * dynamics - library of dynamics used in various worlds
+  * worlds - the various worlds
+
 = contents of world directories =
 
   * definitions
-    * $id-$name -> ../definitions/$def 
+    * $id-$name -> ../../definitions/$def 
       * add-to-world    - exit 0 if this definition is happy joining a world
       * add-definition  - exit 0 if this definition approves a later addition
       * add-dynamic     - same, but for dynamics
@@ -45,7 +51,7 @@ all of the values can be flattened into states/$state_num/$keyname.
 
 = interfaces of definition and dynamic scripts =
 
-Scripts pull data from state/*.  Scripts request changes by emitting YAML
+Scripts pull data from state/\*.  Scripts request changes by emitting YAML
 describing those changes.  The YAML data must be a flat hash of string:string
 pairs.  $value will be written to $state/$source/$key.  For dynamic output,
 $source is the identifier of the dynamic in question.  For definition output
