@@ -61,7 +61,7 @@ end of state processing the source is hard-coded to "post".
 
 States are numbered in decimal starting from 0.
 
-$definition/add-* take a parameter naming the entity to be added.  Their
-output, if any, is state information.
+{{{$definition/add-*}}} are scripts which take a parameter naming the
+entity to be added.  Their output, if any, is state information.
 
 State 0 is a special case.
