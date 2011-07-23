@@ -1,7 +1,7 @@
 #summary These docs should be organized into other pages
 
-These notes will not stay here forever.  Someone should migrate them to the
-project wiki.  But for now...
+Most of this is moving into OnDiskProtocol.  The rest will go
+elsewhere at some point?
 
 = contents of data directory =
 

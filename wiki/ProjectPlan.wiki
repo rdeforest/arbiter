@@ -18,7 +18,7 @@
 === Formalize protocols ===
 
   * OnDiskProtocol
-  * ModuleProtocol
+  * HookProtocol
 
 === Finish bin/run ===
 
