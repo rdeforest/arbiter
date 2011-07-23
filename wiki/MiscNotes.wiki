@@ -51,12 +51,13 @@ all of the values can be flattened into states/$state_num/$keyname.
 
 = interfaces of definition and dynamic scripts =
 
-Scripts pull data from state/\*.  Scripts request changes by emitting YAML
-describing those changes.  The YAML data must be a flat hash of string:string
-pairs.  $value will be written to $state/$source/$key.  For dynamic output,
-$source is the identifier of the dynamic in question.  For definition output
-generated in state setup the source is hard-coded to "pre".  For definition
-output at the end of state processing the source is hard-coded to "post".
+Scripts pull data from the state directory.  Scripts request changes
+by emitting YAML describing those changes.  The YAML data must be a
+flat hash of string:string pairs.  $value will be written to
+$state/$source/$key.  For dynamic output, $source is the identifier of
+the dynamic in question.  For definition output generated in state
+setup the source is hard-coded to "pre".  For definition output at the
+end of state processing the source is hard-coded to "post".
 
 States are numbered in decimal starting from 0.
 
