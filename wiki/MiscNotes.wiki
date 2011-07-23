@@ -36,8 +36,8 @@ project wiki.  But for now...
     * {{{$n/$keyname}}} is a file containing a string value
 
   * {{{log/$next_state_num/$nn-$agent/$keyname}}} is a file containing a new value
-    $nn is assigned by the runner script and passed to the agent
-    $agent the dynamic responsible for these changes
+    * {{{$nn}}} is assigned by the runner script and passed to the agent
+    * {{{$agent}}} is the dynamic responsible for these changes
 
 As long as no definitions identify conflicts between the changes requested by the agents, the runner script will flattened the data into {{{states/$state_num/}}}.
 
