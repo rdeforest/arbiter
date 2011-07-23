@@ -36,7 +36,7 @@ The Google Code page, which is probably where you got this CYOFAQ, has instructi
 
 A: No.
 
-=*9. What sorts of game theory goals research goals motivate Arbiter, and what can be done to advance them?*=
+=*9. What sorts of game theory research goals motivate Arbiter, and what can be done to advance them?*=
 
 A: Great question, HIP. I like the cut of your jib. One important concern we have in developing Arbiter has to do with very sophisticated players; having players that use very sophisticated decision procedures to choose moves creates massive computational overhead in models that are developed with a single program emulating an entire population (see question 4). One good project would be to program some very sophisticated decision engines that are designed to interface with Arbiter and show how they could be run as separate processes, perhaps even on separate hardware over a network, and then pass moves to Arbiter using tokens it understands.
 	Another great idea would be to develop a game using the evolving pay-off matrix notion described in question 5. I kinda want to do that, but I'm stuck writing this CYOFAQ for the moment.
