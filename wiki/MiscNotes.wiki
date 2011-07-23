@@ -30,7 +30,6 @@ elsewhere at some point?
     * {{{0/}}} is global/constant state - set by definitions when ... ?
     * {{{1/}}} is the first dynamic state
     * {{{current     ->}}} latest state dir
-    * {{{start       ->}}} 1 
     * {{{$n/previous -> ../$[$n - 1]}}} predecessor state $n
     * {{{$n/next     -> ../$[$n + 1]}}} successor   state $n
       * only exists once $n + 1 has started the setup phase
