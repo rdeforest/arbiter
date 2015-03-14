@@ -1,0 +1,1 @@
+Arbiter provides a framework for reproducibly combining rules and strategies to generate game states for later research.
